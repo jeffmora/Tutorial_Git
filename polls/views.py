@@ -10,7 +10,7 @@ def inicio(request):
 
 def detalle(request, pregunta_id):
     pregunta = get_object_or_404(Pregunta, pk=pregunta_id)
-    return render(request, 'polls/detalle.html', {'Pregunta': Pregunta})
+    return render(request, 'polls/detalle.html', {'Pregunta': pregunta})
 
 def resultados(request, pregunta_id):
     response = "Estas viendo los resultados de la pregunta %s."
