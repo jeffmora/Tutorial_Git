@@ -1,0 +1,12 @@
+{% if ultima_lista_preguntas %}
+    <ul>
+    {% for Pregunta in ultima_lista_preguntas %}
+        <li>
+            <!-- <a href="/polls/{{ Pregunta.id }}/">{{ Pregunta.texto_pregunta }}</a> -->
+            <a href="{% url 'polls:detalle' Pregunta.id %}">{{ Pregunta.texto_pregunta }}</a>
+        </li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No hay encuestas disponibles.</p>
+{% endif %}
