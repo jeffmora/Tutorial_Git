@@ -1,21 +1,25 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
+from django.views import generic
 
 from .models import Pregunta, Eleccion
 
-def inicio(request):
-    ultima_lista_preguntas = Pregunta.objects.order_by('-fecha_publicacion')[:5]
-    contexto = {'ultima_lista_preguntas': ultima_lista_preguntas}
-    return render(request, 'polls/indice.html', contexto)
+class iniciovista(generic.ListView):
+    template_name = 'polls/indice.html'
+    context_object_name = 'latest_question_list'
 
-def detalle(request, pregunta_id):
-    pregunta = get_object_or_404(Pregunta, pk=pregunta_id)
-    return render(request, 'polls/detalle.html', {'pregunta': pregunta})
+    def get_queryset(self):
+        """Devuelva las últimas cinco preguntas publicadas."""
+        return Pregunta.objects.order_by('-fecha_publicacion')[:5]
 
-def resultados(request, pregunta_id):
-    pregunta = get_object_or_404(Pregunta, pk=pregunta_id)
-    return render(request, 'polls/resultados.html', {'pregunta': pregunta})
+class detallevista(generic.DetailView):
+    model = Pregunta
+    template_name = 'polls/detalle.html'
+
+class resultadosvista(generic.DetailView):
+    model = Pregunta
+    template_name = 'polls/resultados.html'
 
 def voto(request, pregunta_id):
     pregunta = get_object_or_404(Pregunta, pk=pregunta_id)
