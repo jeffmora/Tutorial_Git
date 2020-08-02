@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 from django.views import generic
+from django.utils import timezone
 
 from .models import Pregunta, Eleccion
 
@@ -10,12 +11,17 @@ class iniciovista(generic.ListView):
     context_object_name = 'latest_question_list'
 
     def get_queryset(self):
-        """Devuelva las últimas cinco preguntas publicadas."""
-        return Pregunta.objects.order_by('-fecha_publicacion')[:5]
+        """Devuelva las últimas cinco preguntas publicadas (sin incluir las que se publicarán en el futuro)."""
+        return Pregunta.objects.filter(fecha_publicacion__lte=timezone.now()).order_by('-fecha_publicacion')[:5]
 
 class detallevista(generic.DetailView):
     model = Pregunta
     template_name = 'polls/detalle.html'
+    def get_queryset(self):
+        """
+        Excluye cualquier pregunta que aún no se haya publicado.
+        """
+        return Pregunta.objects.filter(fecha_publicacion__lte=timezone.now())
 
 class resultadosvista(generic.DetailView):
     model = Pregunta

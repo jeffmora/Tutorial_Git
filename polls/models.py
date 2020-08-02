@@ -9,7 +9,8 @@ class Pregunta(models.Model):
     def __str__(self):
         return self.texto_pregunta
     def fue_publicado_recientemente(self):
-        return self.fecha_publicacion >= timezone.now() - datetime.timedelta(days=1)
+        now = timezone.now()
+        return now - datetime.timedelta(days=1) <= self.fecha_publicacion <= now
     
 
 

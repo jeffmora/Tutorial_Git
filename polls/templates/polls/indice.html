@@ -1,6 +1,6 @@
-{% if ultima_lista_preguntas %}
+{% if latest_question_list %}
     <ul>
-    {% for pregunta in ultima_lista_preguntas %}
+    {% for Pregunta in latest_question_list %}
         <li>
             <!-- <a href="/polls/{{ Pregunta.id }}/">{{ Pregunta.texto_pregunta }}</a> -->
             <a href="{% url 'polls:detalle' Pregunta.id %}">{{ Pregunta.texto_pregunta }}</a>
