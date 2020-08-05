@@ -55,7 +55,8 @@ ROOT_URLCONF = 'Tuto_Uno.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],
+        # 'DIRS': [BASE_DIR+'/'+'templates'], Para definir rutas de accesos se deben concadenar texto para que el lenguaje sea reconocido.
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
